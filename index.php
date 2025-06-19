@@ -31,7 +31,7 @@ if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
 
 http_response_code(200);
 
-function sendTelegramMessageFromChat($chatId, $text, $apiURL) {
+function sendTelegramMessage($chatId, $text, $apiURL) {
     $ch = curl_init($apiURL . "sendMessage");
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
