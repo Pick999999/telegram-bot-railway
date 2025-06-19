@@ -10,11 +10,12 @@ if (!$botToken) {
     exit;
 }
 */
+$raw_chat_id = '8068993219' ;
 $botToken = "7309653342:AAFalGA-wBjF1AauCR47r0xkHP2OueYfBFo";
 
 $apiURL = "https://api.telegram.org/bot$botToken/";
 $content = file_get_contents("php://input");
-file_put_contents("telegram_log.txt", date("c") . " : " . $content . "\n", FILE_APPEND);
+//file_put_contents("telegram_log.txt", date("c") . " : " . $content . "\n", FILE_APPEND);
 
 $update = json_decode($content, true);
 if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
@@ -22,11 +23,15 @@ if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
     $text = $update["message"]["text"];
     $reply = "Echo: " . $text;
     sendTelegramMessage($chatId, $reply, $apiURL);
+} else {
+    $raw_chat_id = '8068993219' ;
+	$reply = $_GET['message'] ;
+    sendTelegramMessage($raw_chat_Id, $reply, $apiURL);
 }
 
 http_response_code(200);
 
-function sendTelegramMessage($chatId, $text, $apiURL) {
+function sendTelegramMessageFromChat($chatId, $text, $apiURL) {
     $ch = curl_init($apiURL . "sendMessage");
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
