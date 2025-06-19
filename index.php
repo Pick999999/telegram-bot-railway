@@ -1,6 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+echo "RailWay By 989898" ; return ;
 
 // รับค่าจาก Environment
 $botToken = getenv('BOT_TOKEN');
