@@ -25,8 +25,8 @@ if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
     sendTelegramMessage($chatId, $reply, $apiURL);
 } else {
     $raw_chat_id = '8068993219' ;
-	$reply = $_GET['message'] ;
-    sendTelegramMessage($raw_chat_Id, $reply, $apiURL);
+    $reply = $_GET['message'] ;
+    sendTelegramMessage($raw_chat_id, $reply, $apiURL);
 }
 
 http_response_code(200);
