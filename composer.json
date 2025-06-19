@@ -2,5 +2,8 @@
   "name": "telegram-bot/railway",
   "require": {
     "vlucas/phpdotenv": "^5.5"
+  },
+  "scripts": {
+    "start": "php -S 0.0.0.0:8080 index.php"
   }
 }
