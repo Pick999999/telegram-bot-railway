@@ -1,0 +1,6 @@
+{
+  "name": "telegram-bot/railway",
+  "require": {
+    "vlucas/phpdotenv": "^5.5"
+  }
+}
