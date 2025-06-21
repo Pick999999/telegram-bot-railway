@@ -53,14 +53,14 @@ function sendTelegramMessage($chatId, $text, $apiURL) {
 
 function ManageBOTMessage($chatId,$textRecive,$apiURL) { 
 
-    $chatId = $update["message"]["chat"]["id"];
-    $textRecive = $update["message"]["text"];
+    //$chatId = $update["message"]["chat"]["id"];
+    //$textRecive = $update["message"]["text"];
 	$reply = 'echo->' . $textRecive ;
     
      if (strtolower($textRecive) == 'starttrade' ) {
 	    UpdatePageTradeStatus();
      } else {
-        sendTelegramMessage($ChatId, $reply, $apiURL);
+        sendTelegramMessage($chatId, $reply, $apiURL);
      }
 
 } // end function
