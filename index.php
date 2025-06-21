@@ -55,7 +55,7 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 
     $chatId = $update["message"]["chat"]["id"];
     $textRecive = $update["message"]["text"];
-	$reply = 'echo->' .  $textRecive ;
+	$reply = 'echo->' . $textRecive ;
     
      if (strtolower($textRecive) == 'starttrade' ) {
 	    UpdatePageTradeStatus();
@@ -100,12 +100,12 @@ $response = curl_exec($ch);
 
 // ตรวจสอบว่ามี error เกิดขึ้นหรือไม่
 if (curl_errno($ch)) {
-    echo 'cURL Error: ' . curl_error($ch);
+   // echo 'cURL Error: ' . curl_error($ch);
 } else {
     // แสดงผลลัพธ์
-    echo 'API Response: <pre>';
-    echo htmlentities($response); // ใช้ htmlentities เพื่อป้องกันปัญหาการแสดงผล HTML/script ที่มาจาก response
-    echo '</pre>';
+    //echo 'API Response: <pre>';
+    //echo htmlentities($response); // ใช้ htmlentities เพื่อป้องกันปัญหาการแสดงผล HTML/script ที่มาจาก response
+    //echo '</pre>';
 }
 
 // ปิด cURL session
