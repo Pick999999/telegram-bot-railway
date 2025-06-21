@@ -23,7 +23,7 @@ if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
     $text = $update["message"]["text"];
     $reply = "Echo: " . $text;
     sendTelegramMessage($chatId, $reply, $apiURL);
-    ManageBOTMessage($update);
+    $response = ManageBOTMessage($chatId,$text,$apiURL);
 } else {
     $raw_chat_id = '8068993219' ;
     $reply = $_GET['message'] ;
@@ -51,14 +51,17 @@ function sendTelegramMessage($chatId, $text, $apiURL) {
 }
 
 
-function ManageBOTMessage($update) { 
+function ManageBOTMessage($chatId,$textRecive,$apiURL) { 
 
     $chatId = $update["message"]["chat"]["id"];
     $textRecive = $update["message"]["text"];
-    $reply = "Echo: " . $text;
-	if (strtolower($textRecive) == 'starttrade' ) {
-		UpdatePageTradeStatus();
-	}
+	$reply = 'echo->'  $textRecive ;
+    
+     if (strtolower($textRecive) == 'starttrade' ) {
+	    UpdatePageTradeStatus();
+     } else {
+        sendTelegramMessage($ChatId, $reply, $apiURL);
+     }
 
 } // end function
 
