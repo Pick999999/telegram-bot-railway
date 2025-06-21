@@ -32,7 +32,9 @@ if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
 
 http_response_code(200);
 
+
 function sendTelegramMessage($chatId, $text, $apiURL) {
+
     $ch = curl_init($apiURL . "sendMessage");
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
@@ -47,45 +49,49 @@ function sendTelegramMessage($chatId, $text, $apiURL) {
         file_put_contents("curl_error.txt", date("c") . " : " . $err . "\n", FILE_APPEND);
     }
     curl_close($ch);
-    file_put_contents("telegram_response.txt", date("c") . " : " . $res . "\n", FILE_APPEND);
+    //file_put_contents("telegram_response.txt", date("c") . " : " . $res . "\n", FILE_APPEND);
 }
 
 
 function ManageBOTMessage($chatId,$textRecive,$apiURL) { 
+
 
     //$chatId = $update["message"]["chat"]["id"];
     //$textRecive = $update["message"]["text"];
 	$reply = 'echo->' . $textRecive ;
     
      if (strtolower($textRecive) == 'starttrade' ) {
-	    UpdatePageTradeStatus();
-     } else {
-        sendTelegramMessage($chatId, $reply, $apiURL);
-     }
+	    $responseText = UpdatePageTradeStatus('y',$chatId,$apiURL); 
+		sendTelegramMessage($chatId, $responseText, $apiURL);
+		return ;
+     } 
+	 if (strtolower($textRecive) == 'closetrade' ) {
+	    $responseText = UpdatePageTradeStatus('n',$chatId,$apiURL); 
+		sendTelegramMessage($chatId, $responseText, $apiURL);
+		return ;
+     } 
 
+     sendTelegramMessage($chatId, $reply, $apiURL);
+     
 } // end function
 
-function UpdatePageTradeStatus() { 
+
+function UpdatePageTradeStatus($tradeStatus,$chatId,$apiURL) { 
 
 $url = 'https://thepapers.in/deriv/updatePageTrade.php';
-
-// กำหนด parameter ที่ต้องการส่งไปกับ GET request
 $parameters = array(
     'assetCode' => 'R_100',
-    'isOpenTrade' => 'Y',
+    'isOpenTrade' => $tradeStatus,
     'moneyTrade' => 1,
     'targetTrade' => 1.5
 );
 
 // สร้าง query string จาก array ของ parameters
 $queryString = http_build_query($parameters);
-
-// รวม URL และ query string เข้าด้วยกัน
 $fullUrl = $url . '?' . $queryString;
 
 // เริ่มต้น cURL session
 $ch = curl_init();
-
 // ตั้งค่า cURL options
 curl_setopt($ch, CURLOPT_URL, $fullUrl); // กำหนด URL
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // ให้ cURL ส่งผลลัพธ์กลับมาเป็น string แทนที่จะแสดงออกทางหน้าจอ
@@ -108,12 +114,47 @@ if (curl_errno($ch)) {
     //echo '</pre>';
 }
 
-// ปิด cURL session
 curl_close($ch);
+
 
 return $response ;
 
 
 } // end function
+
+function sendTelegramTable($apiURL, $chatId,$headTable, $tableData) {
+    // สร้างตารางด้วย Monospace font
+    $message = "<b>📊 รายงานข้อมูล</b>\n\n";
+    $message .= "<code>";
+    //$message .= "ชื่อ        อายุ   เงินเดือน\n";
+    $message .=  $headTable . "\n";
+    $message .= "─────────────────────────\n";
+    
+    foreach ($tableData as $row) {
+        $message .= sprintf("%-10s %3d   %8s\n", 
+            $row['name'], 
+            $row['age'], 
+            number_format($row['salary']));
+    }
+    $message .= "</code>";
+    
+    //$url = "https://api.telegram.org/bot{$botToken}/sendMessage";
+	$url = $apiURL ;
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        'chat_id' => $chatId,
+        'text' => $message,
+        'parse_mode' => 'HTML'
+    ]));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $result = curl_exec($ch);
+    curl_close($ch);
+    
+    return json_decode($result, true);
+}
 
 ?>
