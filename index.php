@@ -55,7 +55,7 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 
     $chatId = $update["message"]["chat"]["id"];
     $textRecive = $update["message"]["text"];
-	$reply = 'echo->'  $textRecive ;
+	$reply = 'echo->' .  $textRecive ;
     
      if (strtolower($textRecive) == 'starttrade' ) {
 	    UpdatePageTradeStatus();
