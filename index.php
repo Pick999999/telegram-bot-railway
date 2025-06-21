@@ -22,7 +22,7 @@ if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
     $chatId = $update["message"]["chat"]["id"];
     $text = $update["message"]["text"];
     $reply = "Echo: " . $text;
-    sendTelegramMessage($chatId, $reply, $apiURL);
+    //sendTelegramMessage($chatId, $reply, $apiURL);
     $response = ManageBOTMessage($chatId,$text,$apiURL);
 } else {
     $raw_chat_id = '8068993219' ;
