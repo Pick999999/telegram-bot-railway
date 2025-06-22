@@ -130,7 +130,7 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 
-return $response .'->' . $stAr[0] . '=' $stAr[1];
+return $response .'->' . $stAr[0] . '=' . $stAr[1];
 
 
 } // end function
