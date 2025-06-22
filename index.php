@@ -85,10 +85,10 @@ $assetCode2 = '???';
 if (strtolower($stAr[0]) === 'ot' ) {
 	
 	$assetCode = trim($stAr[1]) ;
-	if ($assetCode == '1') { $assetCode2 = 'R_25' ;  }
-	if ($assetCode == '2') { $assetCode2 = 'R_50' ;  }
-	if ($assetCode == '3') { $assetCode2 = 'R_75' ;  }
-	if ($assetCode == '4') { $assetCode2 = 'R_100' ;  }
+	if ($assetCode == '25') { $assetCode2 = 'R_25' ;  }
+	if ($assetCode == '50') { $assetCode2 = 'R_50' ;  }
+	if ($assetCode == '75') { $assetCode2 = 'R_75' ;  }
+	if ($assetCode == '100') { $assetCode2 = 'R_100' ;  }
 }  
 
 $url = 'https://thepapers.in/deriv/updatePageTrade.php';
