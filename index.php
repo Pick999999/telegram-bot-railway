@@ -130,7 +130,8 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 
-return $response .'->' . $stAr[0] . '=' . strtolower($stAr[0]) . '->'. $assetCode2 ;
+//return $response .'->' . $stAr[0] . '=' . strtolower($stAr[0]) . '=>'. $assetCode2 ;
+return   $stAr[0] .  '=>'. $assetCode2 ;
 
 
 } // end function
