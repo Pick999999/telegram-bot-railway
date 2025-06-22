@@ -79,7 +79,7 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 
 function UpdatePageTradeStatus($tradeStatus,$textRecive,$chatId,$apiURL) { 
 
-$st = substr($textRecive,0,2);
+$st = substr($textRecive,0,3);
 $assetCode2 = '';
 if (strtolower($textRecive) === 'ot-' ) {
 	$stAr = explode("-",$st);
