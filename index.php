@@ -84,11 +84,11 @@ $stAr = explode("-",$textRecive);
 $assetCode2 = '???';
 if (strtolower($stAr[0]) === 'ot-' ) {
 	
-	$assetCode = $stAr[1] ;
-	if ($assetCode==='1') { $assetCode2 = 'R_25' ;  }
-	if ($assetCode==='2') { $assetCode2 = 'R_50' ;  }
-	if ($assetCode==='3') { $assetCode2 = 'R_75' ;  }
-	if ($assetCode==='4') { $assetCode2 = 'R_100' ;  }
+	$assetCode = trim($stAr[1]) ;
+	if ($assetCode == '1') { $assetCode2 = 'R_25' ;  }
+	if ($assetCode == '2') { $assetCode2 = 'R_50' ;  }
+	if ($assetCode == '3') { $assetCode2 = 'R_75' ;  }
+	if ($assetCode == '4') { $assetCode2 = 'R_100' ;  }
 }  
 
 $url = 'https://thepapers.in/deriv/updatePageTrade.php';
@@ -130,7 +130,7 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 
-return $response .'->' . $stAr[0] . '=' . $stAr[1];
+return $response .'->' . $stAr[0] . '=' . $assetCode . '->'. $assetCode2 ;
 
 
 } // end function
