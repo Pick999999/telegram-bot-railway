@@ -129,7 +129,7 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 
-return $response ;
+return $response .'-' . $assetCode ;
 
 
 } // end function
