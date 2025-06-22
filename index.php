@@ -82,7 +82,7 @@ function UpdatePageTradeStatus($tradeStatus,$textRecive,$chatId,$apiURL) {
 //$st = substr($textRecive,0,3);
 $stAr = explode("-",$textRecive);
 $assetCode2 = '???';
-if (strtolower($stAr[0]) === 'ot-' ) {
+if (strtolower($stAr[0]) === 'ot' ) {
 	
 	$assetCode = trim($stAr[1]) ;
 	if ($assetCode == '1') { $assetCode2 = 'R_25' ;  }
