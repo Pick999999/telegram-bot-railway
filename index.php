@@ -80,14 +80,14 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 function UpdatePageTradeStatus($tradeStatus,$textRecive,$chatId,$apiURL) { 
 
 $st = substr($textRecive,0,3);
-$assetCode2 = '';
+$assetCode2 = '!!!';
 if (strtolower($st) === 'ot-' ) {
 	$stAr = explode("-",$st);
 	$assetCode = $stAr[1] ;
-	if ($assetCode===1) { $assetCode2 = 'R_25' ;  }
-	if ($assetCode===2) { $assetCode2 = 'R_50' ;  }
-	if ($assetCode===3) { $assetCode2 = 'R_75' ;  }
-	if ($assetCode===4) { $assetCode2 = 'R_100' ;  }
+	if ($assetCode==='1') { $assetCode2 = 'R_25' ;  }
+	if ($assetCode==='2') { $assetCode2 = 'R_50' ;  }
+	if ($assetCode==='3') { $assetCode2 = 'R_75' ;  }
+	if ($assetCode==='4') { $assetCode2 = 'R_100' ;  }
 }  
 
 $url = 'https://thepapers.in/deriv/updatePageTrade.php';
