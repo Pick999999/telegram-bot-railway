@@ -79,10 +79,11 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 
 function UpdatePageTradeStatus($tradeStatus,$textRecive,$chatId,$apiURL) { 
 
-$st = substr($textRecive,0,3);
+//$st = substr($textRecive,0,3);
+$stAr = explode("-",$textRecive);
 $assetCode2 = '!!!';
-if (strtolower($st) === 'ot-' ) {
-	$stAr = explode("-",$st);
+if (strtolower($stAr[0]) === 'ot-' ) {
+	
 	$assetCode = $stAr[1] ;
 	if ($assetCode==='1') { $assetCode2 = 'R_25' ;  }
 	if ($assetCode==='2') { $assetCode2 = 'R_50' ;  }
@@ -129,7 +130,7 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 
-return $response .'-' . $assetCode ;
+return $response .'-' . $stAr[0] . '=' $stAr[1];
 
 
 } // end function
