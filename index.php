@@ -81,7 +81,7 @@ function UpdatePageTradeStatus($tradeStatus,$textRecive,$chatId,$apiURL) {
 
 //$st = substr($textRecive,0,3);
 $stAr = explode("-",$textRecive);
-$assetCode2 = '!!!';
+$assetCode2 = '???';
 if (strtolower($stAr[0]) === 'ot-' ) {
 	
 	$assetCode = $stAr[1] ;
@@ -130,7 +130,7 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 
-return $response .'-' . $stAr[0] . '=' $stAr[1];
+return $response .'->' . $stAr[0] . '=' $stAr[1];
 
 
 } // end function
