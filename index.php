@@ -59,7 +59,7 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
     //$chatId = $update["message"]["chat"]["id"];
     //$textRecive = $update["message"]["text"];
 	
-     $st = substr($textRecive,0,2);
+     $st = substr($textRecive,0,3);
      if (strtolower($textRecive) === 'ot-' ) {
 	    $responseText = UpdatePageTradeStatus('Y',$textRecive,$chatId,$apiURL); 
 		sendTelegramMessage($chatId, $responseText, $apiURL);
