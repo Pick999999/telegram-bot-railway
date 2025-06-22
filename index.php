@@ -71,7 +71,7 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 		return ;
      } 
 
-     $reply = 'echo->' . $textRecive ;
+     $reply = 'echo->' . $textRecive . '--'. $st ;
      sendTelegramMessage($chatId, $reply, $apiURL);
      
 } // end function
