@@ -58,29 +58,41 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 
     //$chatId = $update["message"]["chat"]["id"];
     //$textRecive = $update["message"]["text"];
-	$reply = 'echo->' . $textRecive ;
-    
-     if (strtolower($textRecive) == 'starttrade' ) {
-	    $responseText = UpdatePageTradeStatus('y',$chatId,$apiURL); 
+	
+     $st = substr($textRecive,0,2);
+     if (strtolower($textRecive) === 'ot-' ) {
+	    $responseText = UpdatePageTradeStatus('Y',$textRecive,$chatId,$apiURL); 
 		sendTelegramMessage($chatId, $responseText, $apiURL);
 		return ;
      } 
-	 if (strtolower($textRecive) == 'closetrade' ) {
-	    $responseText = UpdatePageTradeStatus('n',$chatId,$apiURL); 
+	 if (strtolower($textRecive) === 'clt' ) {
+	    $responseText = UpdatePageTradeStatus('N',$textRecive,$chatId,$apiURL); 
 		sendTelegramMessage($chatId, $responseText, $apiURL);
 		return ;
      } 
 
+     $reply = 'echo->' . $textRecive ;
      sendTelegramMessage($chatId, $reply, $apiURL);
      
 } // end function
 
 
-function UpdatePageTradeStatus($tradeStatus,$chatId,$apiURL) { 
+function UpdatePageTradeStatus($tradeStatus,$textRecive,$chatId,$apiURL) { 
+
+$st = substr($textRecive,0,2);
+$assetCode2 = '';
+if (strtolower($textRecive) === 'ot-' ) {
+	$stAr = explode("-",$st);
+	$assetCode = $stAr[1] ;
+	if ($assetCode===1) { $assetCode2 = 'R_25' ;  }
+	if ($assetCode===2) { $assetCode2 = 'R_50' ;  }
+	if ($assetCode===3) { $assetCode2 = 'R_75' ;  }
+	if ($assetCode===4) { $assetCode2 = 'R_100' ;  }
+}  
 
 $url = 'https://thepapers.in/deriv/updatePageTrade.php';
 $parameters = array(
-    'assetCode' => 'R_100',
+    'assetCode' => $assetCode2,
     'isOpenTrade' => $tradeStatus,
     'moneyTrade' => 1,
     'targetTrade' => 1.5
