@@ -118,7 +118,7 @@ curl_close($ch);
 
 
 //return $response .'->' . $stAr[0] . '=' . strtolower($stAr[0]) . '=>'. $assetCode2 ;
-return   $stAr[0] .  '=>'. $stAr[1] . ' Finaly AssetCode2='.  $assetCode2 ;
+return   'รับคำสั่ง '. $textRecive . ' Finaly AssetCode2='.  $assetCode2 ;
 
 
 } // end function
