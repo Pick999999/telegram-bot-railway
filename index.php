@@ -1,4 +1,8 @@
 <?php
+
+//@mywebbotth_bot
+
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -60,12 +64,13 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
     //$textRecive = $update["message"]["text"];
 	
      $st = substr($textRecive,0,3);
-     if (strtolower($st) === 'ot-' ) {
+     if (strtolower($st) === '/ot' ) {
 	    $responseText = UpdatePageTradeStatus('Y',$textRecive,$chatId,$apiURL); 
 		sendTelegramMessage($chatId, $responseText, $apiURL);
 		return ;
      } 
-	 if (strtolower($textRecive) === 'clt' ) {
+	 $st = substr($textRecive,0,4);
+	 if (strtolower($textRecive) === '/clt' ) {
 	    $responseText = UpdatePageTradeStatus('N',$textRecive,$chatId,$apiURL); 
 		sendTelegramMessage($chatId, $responseText, $apiURL);
 		return ;
@@ -170,5 +175,15 @@ function sendTelegramTable($apiURL, $chatId,$headTable, $tableData) {
     
     return json_decode($result, true);
 }
+
+
+
+/*
+ot25 - เปิดเทรด
+clt -ปิดเทรด
+viewstatus - ดูสถานะ
+settings - ตั้งค่า
+
+*/
 
 ?>
