@@ -69,9 +69,8 @@ function UpdatePageTradeStatus($tradeStatus,$textRecive,$chatId,$apiURL) {
 
 
 $assetCode2 = '???';
-if (strtolower($textRecive) === '/opentrade' ) {
-	
-	$assetCode = '25' ;  trim($stAr[1]) ;
+if (strtolower($textRecive) === '/opentrade' ) {	
+	$assetCode = '25' ; 
 	if ($assetCode == '25') { $assetCode2 = 'R_25' ;  }
 	if ($assetCode == '50') { $assetCode2 = 'R_50' ;  }
 	if ($assetCode == '75') { $assetCode2 = 'R_75' ;  }
