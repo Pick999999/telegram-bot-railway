@@ -25,7 +25,7 @@ $update = json_decode($content, true);
 if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
     $chatId = $update["message"]["chat"]["id"];
     $text = $update["message"]["text"];
-    $reply = "Echo: " . $text;
+    //$reply = "BOT Echo : " . $text;
     //sendTelegramMessage($chatId, $reply, $apiURL);
     $response = ManageBOTMessage($chatId,$text,$apiURL);
 } else {
@@ -37,24 +37,6 @@ if (isset($update["message"]["chat"]["id"], $update["message"]["text"])) {
 http_response_code(200);
 
 
-function sendTelegramMessage($chatId, $text, $apiURL) {
-
-    $ch = curl_init($apiURL . "sendMessage");
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => [
-            'chat_id' => $chatId,
-            'text' => $text
-        ],
-    ]);
-    $res = curl_exec($ch);
-    if ($err = curl_error($ch)) {
-        file_put_contents("curl_error.txt", date("c") . " : " . $err . "\n", FILE_APPEND);
-    }
-    curl_close($ch);
-    //file_put_contents("telegram_response.txt", date("c") . " : " . $res . "\n", FILE_APPEND);
-}
 
 
 function ManageBOTMessage($chatId,$textRecive,$apiURL) { 
@@ -63,20 +45,20 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
     //$chatId = $update["message"]["chat"]["id"];
     //$textRecive = $update["message"]["text"];
 	
-     $st = substr($textRecive,0,3);
-     if (strtolower($st) === '/ot' ) {
+     //$st = substr($textRecive,0,3);
+     if (strtolower($st) === '/opentrade' ) {
 	    $responseText = UpdatePageTradeStatus('Y',$textRecive,$chatId,$apiURL); 
 		sendTelegramMessage($chatId, $responseText, $apiURL);
 		return ;
      } 
 	 $st = substr($textRecive,0,4);
-	 if (strtolower($textRecive) === '/clt' ) {
+	 if (strtolower($textRecive) === '/closetrade' ) {
 	    $responseText = UpdatePageTradeStatus('N',$textRecive,$chatId,$apiURL); 
 		sendTelegramMessage($chatId, $responseText, $apiURL);
 		return ;
      } 
 
-     $reply = 'echo->' . $textRecive . '--'. $st ;
+     $reply = 'case2-echo->' . $textRecive . '--'. $st ;
      sendTelegramMessage($chatId, $reply, $apiURL);
      
 } // end function
@@ -84,12 +66,12 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 
 function UpdatePageTradeStatus($tradeStatus,$textRecive,$chatId,$apiURL) { 
 
-//$st = substr($textRecive,0,3);
-$stAr = explode("-",$textRecive);
+
+
 $assetCode2 = '???';
-if (strtolower($stAr[0]) === 'ot' ) {
+if (strtolower($textRecive) === '/opentrade' ) {
 	
-	$assetCode = trim($stAr[1]) ;
+	$assetCode = '25' ;  trim($stAr[1]) ;
 	if ($assetCode == '25') { $assetCode2 = 'R_25' ;  }
 	if ($assetCode == '50') { $assetCode2 = 'R_50' ;  }
 	if ($assetCode == '75') { $assetCode2 = 'R_75' ;  }
@@ -176,11 +158,32 @@ function sendTelegramTable($apiURL, $chatId,$headTable, $tableData) {
     return json_decode($result, true);
 }
 
+function sendTelegramMessage($chatId, $text, $apiURL) {
+
+    $ch = curl_init($apiURL . "sendMessage");
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => [
+            'chat_id' => $chatId,
+            'text' => $text
+        ],
+    ]);
+    $res = curl_exec($ch);
+    if ($err = curl_error($ch)) {
+        file_put_contents("curl_error.txt", date("c") . " : " . $err . "\n", FILE_APPEND);
+    }
+    curl_close($ch);
+    //file_put_contents("telegram_response.txt", date("c") . " : " . $res . "\n", FILE_APPEND);
+}
 
 
 /*
-ot25 - เปิดเทรด
-clt -ปิดเทรด
+เช้า  @botfather พิมพ์ /setcommands ต่อไปเลือกBot พิมพ์  @mywebbotth_bot
+ทำการ /empty เพื่อลบเมนูเก่า แล้ว
+
+opentrade - เปิดเทรด
+closetrade -ปิดเทรด
 viewstatus - ดูสถานะ
 settings - ตั้งค่า
 
