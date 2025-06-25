@@ -58,6 +58,12 @@ function ManageBOTMessage($chatId,$textRecive,$apiURL) {
 		return ;
      } 
 
+	 if (strtolower($textRecive) === '/viewprofit' ) {
+	    $responseText = getProfit($chatId,$apiURL); 
+		sendTelegramMessage($chatId, $responseText, $apiURL);
+		return ;
+     } 
+
      $reply = 'case2-echo->' . $textRecive . '--'. $st ;
      sendTelegramMessage($chatId, $reply, $apiURL);
      
@@ -118,6 +124,55 @@ curl_close($ch);
 
 //return $response .'->' . $stAr[0] . '=' . strtolower($stAr[0]) . '=>'. $assetCode2 ;
 return   'รับคำสั่ง '. $textRecive . ' Finaly AssetCode2='.  $assetCode2 ;
+
+
+} // end function
+
+
+
+function getProfit($chatId,$apiURL)) { 
+
+$url = 'https://thepapers.in/deriv/getProfitTrade.php';
+$parameters = array(
+    'assetCode' => $assetCode2,
+    'isOpenTrade' => $tradeStatus,
+    'moneyTrade' => 1,
+    'targetTrade' => 1.5
+);
+
+// สร้าง query string จาก array ของ parameters
+$queryString = http_build_query($parameters);
+$fullUrl = $url . '?' . $queryString;
+
+// เริ่มต้น cURL session
+$ch = curl_init();
+// ตั้งค่า cURL options
+curl_setopt($ch, CURLOPT_URL, $fullUrl); // กำหนด URL
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // ให้ cURL ส่งผลลัพธ์กลับมาเป็น string แทนที่จะแสดงออกทางหน้าจอ
+
+// ในกรณีที่ URL เป็น HTTPS และมีปัญหาเรื่อง SSL certificate, คุณอาจจะต้องเพิ่มบรรทัดนี้
+// แต่ควรใช้ด้วยความระมัดระวังและทำความเข้าใจความเสี่ยงด้านความปลอดภัย
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+// ประมวลผล cURL request และเก็บผลลัพธ์
+$response = curl_exec($ch);
+
+// ตรวจสอบว่ามี error เกิดขึ้นหรือไม่
+if (curl_errno($ch)) {
+   // echo 'cURL Error: ' . curl_error($ch);
+} else {
+    // แสดงผลลัพธ์
+    //echo 'API Response: <pre>';
+    //echo htmlentities($response); // ใช้ htmlentities เพื่อป้องกันปัญหาการแสดงผล HTML/script ที่มาจาก response
+    //echo '</pre>';
+}
+
+curl_close($ch);
+
+
+//return $response .'->' . $stAr[0] . '=' . strtolower($stAr[0]) . '=>'. $assetCode2 ;
+return   'รับคำสั่ง '. $textRecive . ' Response= ' . $response ;
 
 
 } // end function
@@ -184,8 +239,10 @@ function sendTelegramMessage($chatId, $text, $apiURL) {
 opentrade - เปิดเทรด
 closetrade -ปิดเทรด
 viewstatus - ดูสถานะ
+viewprofit - ดูกำไรวันนี้
 settings - ตั้งค่า
 
 */
 
 ?>
+
