@@ -130,7 +130,7 @@ return   'รับคำสั่ง '. $textRecive . ' Finaly AssetCode2='.  $
 
 
 
-function getProfit($chatId,$apiURL)) { 
+function getProfit($chatId,$apiURL) { 
 
 $url = 'https://thepapers.in/deriv/getProfitTrade.php';
 $parameters = array(
@@ -150,17 +150,13 @@ $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $fullUrl); // กำหนด URL
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // ให้ cURL ส่งผลลัพธ์กลับมาเป็น string แทนที่จะแสดงออกทางหน้าจอ
 
-// ในกรณีที่ URL เป็น HTTPS และมีปัญหาเรื่อง SSL certificate, คุณอาจจะต้องเพิ่มบรรทัดนี้
-// แต่ควรใช้ด้วยความระมัดระวังและทำความเข้าใจความเสี่ยงด้านความปลอดภัย
-// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
 // ประมวลผล cURL request และเก็บผลลัพธ์
 $response = curl_exec($ch);
 
 // ตรวจสอบว่ามี error เกิดขึ้นหรือไม่
 if (curl_errno($ch)) {
-   // echo 'cURL Error: ' . curl_error($ch);
+    echo 'cURL Error: ' . curl_error($ch);
 } else {
     // แสดงผลลัพธ์
     //echo 'API Response: <pre>';
